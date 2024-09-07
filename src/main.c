@@ -1,13 +1,6 @@
 #include "common.h"
 #include "types.h"
 
-#define SCALE (1.0 / COUNT)
-#define SIZE (int)(WINDOW_WIDTH * SCALE)
-#define LEFT_COLUMN_BOUND 0
-#define RIGHT_COLUMN_BOUND (WINDOW_WIDTH - SIZE)
-#define TOP_ROW_BOUND 0
-#define BOTTOM_ROW_BOUND (WINDOW_HEIGHT - SIZE)
-
 // Returns the subpixel value given a grid pixel coordinate.
 int getPixel(int pixel) { return (pixel * SIZE); }
 
