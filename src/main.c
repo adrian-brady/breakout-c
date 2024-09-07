@@ -1,5 +1,4 @@
 #include "common.h"
-#include "constants.h"
 #include "types.h"
 
 #define SCALE (1.0 / COUNT)
