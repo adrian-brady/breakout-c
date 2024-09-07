@@ -2,65 +2,22 @@
 #include "bar.h"
 #include "common.h"
 #include "drawing.h"
+#include "game.h"
+#include "input.h"
 #include "types.h"
 #include "utils.h"
 
 // The time difference since the last frame draw.
 double delta;
 
-// Array of keys used for scanning keys in the event loop.
-bool KEYS[322] = {0};
-
 // Game loop
-bool loop = true;
-
-// Event handler
-void keyboard() {
-  SDL_Event event;
-  if (SDL_PollEvent(&event)) {
-    // check for messages
-    switch (event.type) {
-    // exit if the window is closed
-    case SDL_QUIT:
-      loop = false; // set game state to done,(do what you want here)
-      break;
-    // check for keypresses
-    case SDL_KEYDOWN:
-      if (event.key.keysym.sym < 322 && event.key.keysym.sym >= 0)
-        KEYS[event.key.keysym.sym] = true;
-      break;
-    default:
-      break;
-    }
-  }
-}
-
-void clearKeys() {
-  for (int i = 0; i < 322; i++) {
-    KEYS[0] = false;
-  }
-}
+extern bool gloop;
 
 // The Global Paddle
-Bar *gbar;
-
-// Input handling
-void handleInput() {
-  if (KEYS[SDLK_d]) {
-    barRight(gbar);
-    KEYS[SDLK_d] = false;
-  }
-  if (KEYS[SDLK_a]) {
-    barLeft(gbar);
-    KEYS[SDLK_a] = false;
-  }
-  if (KEYS[SDLK_ESCAPE] || KEYS[SDLK_q]) {
-    loop = false;
-  }
-}
+extern Bar *gbar;
 
 int main() {
-  SDL_Event event;
+  init_globals();
   SDL_Renderer *renderer = NULL;
   SDL_Window *window = NULL;
 
@@ -80,7 +37,7 @@ int main() {
   initBar(bar);
   bool play = true;
 
-  while (loop) {
+  while (gloop) {
 
     a = SDL_GetTicks();
     delta = a - b;

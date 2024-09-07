@@ -3,10 +3,6 @@
 
 #include "types.h"
 
-extern Bar* gbar;
-extern bool gloop;
-
-void init_global_bar();
-void init_global_loop();
+void init_globals();
 
 #endif

@@ -1,4 +1,9 @@
-#include "game.h"
+#include "types.h"
 
-void init_global_loop() { gloop = true; }
-void init_global_bar() { gbar = (Bar *)malloc(sizeof(Bar)); }
+Bar *gbar;
+bool gloop;
+
+void init_globals() {
+  gbar = (Bar *)malloc(sizeof(Bar));
+  gloop = true;
+}
