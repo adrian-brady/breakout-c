@@ -1,9 +1,5 @@
 #include "common.h"
-
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 800
-
-#define COUNT 40
+#include "constants.h"
 
 #define SCALE (1.0 / COUNT)
 #define SIZE (int)(WINDOW_WIDTH * SCALE)
