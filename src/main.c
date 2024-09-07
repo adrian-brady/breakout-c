@@ -40,14 +40,17 @@ typedef struct Color {
     Uint8 alpha;
 } Color;
 
+// Returns the subpixel value given a grid pixel coordinate.
 int getPixel(int pixel) {
     return (pixel * SIZE);
 }
 
+// Stores the RGBA color of an SDL_Renderer for later restoration.
 void storeColor(SDL_Renderer* renderer, Color* colors) {
     SDL_GetRenderDrawColor(renderer, &colors->red, &colors->green, &colors->blue, &colors->alpha);
 }
 
+// Restores the RGBA color of an SDL_Renderer.
 void restoreColor(SDL_Renderer* renderer, Color* colors) {
     SDL_SetRenderDrawColor(renderer, colors->red, colors->green, colors->blue, colors->alpha);
 }
@@ -62,6 +65,8 @@ typedef struct Ball {
     int neg_y_bound;
 } Ball;
 
+// Draws a vertical line from the top of the window to the bottom.
+// Used for drawing wall columns
 void drawVerticalLine(int pos, SDL_Renderer* renderer) {
     SDL_Rect rect;
     rect.x = pos;
@@ -74,6 +79,8 @@ void drawVerticalLine(int pos, SDL_Renderer* renderer) {
     }
 }
 
+// Draws a horizontal line from the left of the window to the right.
+// Used for drawing border wall.
 void drawHorizontalLine(int pos, SDL_Renderer* renderer) {
     SDL_Rect rect;
     rect.y = pos;
@@ -88,6 +95,8 @@ void drawHorizontalLine(int pos, SDL_Renderer* renderer) {
 
 bool checkCollision(Bar* bar, Ball* ball);
 
+// Updates the ball's position. Checks for the ball hitting the outside border of the
+// playspace. Additionally checks for collision with the paddle.
 void updateBallPos(Ball* ball, SDL_Renderer* renderer, Bar* bar) {
     switch (ball->vdir) {
         case UP:
@@ -157,6 +166,7 @@ void updateBallPos(Ball* ball, SDL_Renderer* renderer, Bar* bar) {
     }
 }
 
+// Draws the ball to the renderer
 void drawBall(Ball* ball, SDL_Renderer* renderer) {
 
     Color old;
@@ -168,8 +178,10 @@ void drawBall(Ball* ball, SDL_Renderer* renderer) {
     restoreColor(renderer, &old);
 }
 
+// The time difference since the last frame draw.
 double delta;
 
+// returns a pre-initialized ball.
 Ball initBall(enum VerticalDirection vdir, enum HorizontalDirection hdir) {
     Ball ball;
     ball.vdir = vdir;
@@ -186,6 +198,7 @@ Ball initBall(enum VerticalDirection vdir, enum HorizontalDirection hdir) {
     return ball;
 }
 
+// Returns a pre-initialized paddle.
 void initBar(Bar* bar) {
     bar->row = getPixel((WINDOW_HEIGHT / SIZE)-5);
     bar->width = 5;
@@ -193,6 +206,7 @@ void initBar(Bar* bar) {
     bar->pos = getPixel((bar->pos/SIZE) + 4);
 }
 
+// Draws the paddle to the renderer.
 void drawBar(SDL_Renderer* renderer, Bar* bar) {
     Color old;
     storeColor(renderer, &old);
@@ -211,13 +225,16 @@ void drawBar(SDL_Renderer* renderer, Bar* bar) {
     restoreColor(renderer, &old);
 }
 
+// Checks if a point is within 2 bounds on an axis.
 bool isInBounds(int b1, int b2, int p1) {
     if (p1 >= b1 && p1 <= b2)
         return true;
     return false;
 }
 
+// Checks for collision between a paddle and a ball.
 bool checkCollision(Bar* bar, Ball* ball) {
+    // Determines next move horizontal component
     int ball_x;
     if (ball->hdir == RIGHT) {
         ball_x = ball->rect.x + SIZE;
@@ -227,6 +244,7 @@ bool checkCollision(Bar* bar, Ball* ball) {
         ball_x = ball->rect.x;
     }
 
+    // Determines next move vertical component.
     int ball_y;
     if (ball->vdir == UP) {
         ball_y = ball->rect.y - SIZE;
@@ -236,6 +254,7 @@ bool checkCollision(Bar* bar, Ball* ball) {
         ball_y = ball->rect.y;
     }
 
+    // Check bounds for vertical and horizontal points
     bool xBound = isInBounds(bar->pos, bar->pos+(bar->width*SIZE), ball_x);
     bool yBound = isInBounds(bar->row, bar->row+SIZE, ball_y);
     if (xBound && yBound) {
@@ -252,22 +271,27 @@ bool checkCollision(Bar* bar, Ball* ball) {
     return false;
 }
 
+// Moves the paddle left one grid unit.
 void barLeft(Bar* bar) {
     if (bar->pos - SIZE > LEFT_COLUMN_BOUND) {
         bar->pos = getPixel((bar->pos/SIZE)-1);
     }
 }
 
+// Moves the paddle right one grid unit.
 void barRight(Bar* bar) {
     if (bar->pos + SIZE < RIGHT_COLUMN_BOUND) {
         bar->pos = getPixel((bar->pos/SIZE)+1);
     }
 }
 
+// Array of keys used for scanning keys in the event loop.
 bool KEYS[322] = {0};
 
+// Game loop
 bool loop = true;
 
+// Event handler
 void keyboard() {
     SDL_Event event;
     if (SDL_PollEvent(&event)) {
@@ -294,7 +318,10 @@ void clearKeys() {
     }
 }
 
+// The Global Paddle
 Bar* gbar;
+
+// Input handling
 void handleInput() {
     if (KEYS[SDLK_d]) {
         barRight(gbar);
