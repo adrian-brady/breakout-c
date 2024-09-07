@@ -1,21 +1,6 @@
 #include "common.h"
 #include "types.h"
 
-// Returns the subpixel value given a grid pixel coordinate.
-int getPixel(int pixel) { return (pixel * SIZE); }
-
-// Stores the RGBA color of an SDL_Renderer for later restoration.
-void storeColor(SDL_Renderer *renderer, Color *colors) {
-  SDL_GetRenderDrawColor(renderer, &colors->red, &colors->green, &colors->blue,
-                         &colors->alpha);
-}
-
-// Restores the RGBA color of an SDL_Renderer.
-void restoreColor(SDL_Renderer *renderer, Color *colors) {
-  SDL_SetRenderDrawColor(renderer, colors->red, colors->green, colors->blue,
-                         colors->alpha);
-}
-
 // Draws a vertical line from the top of the window to the bottom.
 // Used for drawing wall columns
 void drawVerticalLine(int pos, SDL_Renderer *renderer) {
@@ -43,6 +28,7 @@ void drawHorizontalLine(int pos, SDL_Renderer *renderer) {
     SDL_RenderFillRect(renderer, &rect);
   }
 }
+#include "utils.h"
 
 bool checkCollision(Bar *bar, Ball *ball);
 
