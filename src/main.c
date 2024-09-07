@@ -1,5 +1,6 @@
 #include "common.h"
 #include "constants.h"
+#include "types.h"
 
 #define SCALE (1.0 / COUNT)
 #define SIZE (int)(WINDOW_WIDTH * SCALE)
@@ -7,31 +8,6 @@
 #define RIGHT_COLUMN_BOUND (WINDOW_WIDTH - SIZE)
 #define TOP_ROW_BOUND 0
 #define BOTTOM_ROW_BOUND (WINDOW_HEIGHT - SIZE)
-
-typedef struct Bar {
-  int pos;
-  int row;
-  int width;
-} Bar;
-
-enum VerticalDirection {
-  UP,
-  DOWN,
-  V_NONE,
-};
-
-enum HorizontalDirection {
-  RIGHT,
-  LEFT,
-  H_NONE,
-};
-
-typedef struct Color {
-  Uint8 red;
-  Uint8 green;
-  Uint8 blue;
-  Uint8 alpha;
-} Color;
 
 // Returns the subpixel value given a grid pixel coordinate.
 int getPixel(int pixel) { return (pixel * SIZE); }
@@ -47,16 +23,6 @@ void restoreColor(SDL_Renderer *renderer, Color *colors) {
   SDL_SetRenderDrawColor(renderer, colors->red, colors->green, colors->blue,
                          colors->alpha);
 }
-
-typedef struct Ball {
-  SDL_Rect rect;
-  enum VerticalDirection vdir;
-  enum HorizontalDirection hdir;
-  int pos_x_bound;
-  int pos_y_bound;
-  int neg_x_bound;
-  int neg_y_bound;
-} Ball;
 
 // Draws a vertical line from the top of the window to the bottom.
 // Used for drawing wall columns
