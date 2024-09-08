@@ -41,29 +41,31 @@ int game_loop() {
     delta = a - b;
     keyboard();
 
-    if (delta > 1000 / 10.0 && playLoop) {
+    if (delta > 1000 / 10.0) {
       handleInput();
-      SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-      SDL_RenderClear(renderer);
-      SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-      printf("fps: %f\n", 1000 / delta);
+      if (playLoop) {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        printf("fps: %f\n", 1000 / delta);
 
-      drawVerticalLine(0, renderer);
-      drawVerticalLine(getPixel(COUNT - 1), renderer);
-      drawHorizontalLine(0, renderer);
+        drawVerticalLine(0, renderer);
+        drawVerticalLine(getPixel(COUNT - 1), renderer);
+        drawHorizontalLine(0, renderer);
 
-      updateBallPos(gball, renderer, gbar);
-      drawBar(renderer, gbar);
+        updateBallPos(gball, renderer, gbar);
+        drawBar(renderer, gbar);
 
-      b = a;
+        b = a;
 
-      drawBall(gball, renderer);
-      // printf("x: %d, y: %d\n", ball.rect.x, ball.rect.y);
-      if (gball->rect.y < 0) {
-        playLoop = false;
-        printf("You Lost!\n");
+        drawBall(gball, renderer);
+        // printf("x: %d, y: %d\n", ball.rect.x, ball.rect.y);
+        if (gball->rect.y < 0) {
+          playLoop = false;
+          printf("You Lost!\n");
+        }
+        SDL_RenderPresent(renderer);
       }
-      SDL_RenderPresent(renderer);
     }
   }
   SDL_DestroyRenderer(renderer);
