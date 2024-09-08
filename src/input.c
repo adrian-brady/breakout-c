@@ -1,5 +1,4 @@
 #include "bar.h"
-#include "game.h"
 
 // Game loop
 extern bool gloop;
