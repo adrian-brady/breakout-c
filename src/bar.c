@@ -18,7 +18,7 @@ void barLeft(Bar *bar) {
 
 // Moves the paddle right one grid unit.
 void barRight(Bar *bar) {
-  if (bar->pos + SIZE < RIGHT_COLUMN_BOUND) {
+  if (bar->pos + (SIZE * bar->width) < RIGHT_COLUMN_BOUND) {
     bar->pos = getPixel((bar->pos / SIZE) + 1);
   }
 }
