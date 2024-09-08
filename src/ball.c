@@ -74,18 +74,16 @@ void updateBallPos(Ball *ball, SDL_Renderer *renderer, Bar *bar) {
 }
 
 // returns a pre-initialized ball.
-Ball initBall(enum VerticalDirection vdir, enum HorizontalDirection hdir) {
-  Ball ball;
-  ball.vdir = vdir;
-  ball.hdir = hdir;
-  ball.rect.x = 0;
-  ball.rect.y = 0;
-  ball.rect.h = SIZE;
-  ball.rect.w = SIZE;
-  ball.neg_x_bound = LEFT_COLUMN_BOUND;
-  ball.neg_y_bound = TOP_ROW_BOUND;
-  ball.pos_x_bound = RIGHT_COLUMN_BOUND;
-  ball.pos_y_bound = BOTTOM_ROW_BOUND;
-
-  return ball;
+void initBall(Ball *ball, enum VerticalDirection vdir,
+              enum HorizontalDirection hdir) {
+  ball->vdir = vdir;
+  ball->hdir = hdir;
+  ball->rect.x = 0;
+  ball->rect.y = 0;
+  ball->rect.h = SIZE;
+  ball->rect.w = SIZE;
+  ball->neg_x_bound = LEFT_COLUMN_BOUND;
+  ball->neg_y_bound = TOP_ROW_BOUND;
+  ball->pos_x_bound = RIGHT_COLUMN_BOUND;
+  ball->pos_y_bound = BOTTOM_ROW_BOUND;
 }

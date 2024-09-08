@@ -1,6 +1,12 @@
 #include "bar.h"
 #include "game.h"
 
+// Game loop
+extern bool gloop;
+
+// The Global Paddle
+extern Bar *gbar;
+
 // Array of keys used for scanning keys in the event loop.
 bool KEYS[322] = {0};
 
