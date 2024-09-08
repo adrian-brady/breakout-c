@@ -1,4 +1,3 @@
-#include "common.h"
 #include "types.h"
 
 // Returns the subpixel value given a grid pixel coordinate.

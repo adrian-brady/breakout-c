@@ -1,5 +1,4 @@
 #include "collision.h"
-#include "common.h"
 #include "types.h"
 
 // Checks for collision between a paddle and a ball.
