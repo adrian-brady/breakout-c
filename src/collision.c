@@ -24,8 +24,9 @@ bool checkCollision(Bar *bar, Ball *ball) {
   }
 
   // Check bounds for vertical and horizontal points
-  bool xBound = isInBounds(bar->pos, bar->pos + (bar->width * SIZE), ball_x);
-  bool yBound = isInBounds(bar->row, bar->row + SIZE, ball_y);
+  bool xBound =
+      isInBounds(bar->pos, bar->pos + (bar->width * SIZE) - 1, ball_x);
+  bool yBound = isInBounds(bar->row, bar->row + SIZE - 1, ball_y);
   if (xBound && yBound) {
     printf("bound by both x and y\n");
     return true;
